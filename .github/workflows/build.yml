@@ -1,3 +1,4 @@
+
 name: Build CarOS APK
 
 on:
@@ -9,18 +10,44 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check project files
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Prepare Capacitor project
         run: |
-          echo "Checking CarOS project files..."
-          ls -la
-          if [ ! -f index.html ]; then
-            echo "ERROR: index.html is missing."
-            echo "Upload the CarOS web files before building the APK."
-            exit 1
-          fi
-          echo "CarOS index.html found."
+          npm init -y
+          npm install @capacitor/core @capacitor/android
+          npm install --save-dev @capacitor/cli
+          npx cap init CarOS com.keynith01.caros --web-dir=.
+          npx cap add android
+
+      - name: Build debug APK
+        run: |
+          npx cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: CarOS-debug-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
           
