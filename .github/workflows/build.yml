@@ -45,6 +45,8 @@ jobs:
           npm install --save-dev @capacitor/cli
           mkdir -p www
           cp index.html www/index.html
+          npx cap init CarOS com.keynith01.caros --web-dir=www
+          npx cap add android
 
 
       - name: Build debug APK
