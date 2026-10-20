@@ -2,116 +2,113 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#080e19">
-<title>CarOS v0.2</title>
-<style>
-:root {
-  --bg:#080e19;--panel:#111d2d;--panel2:#17263a;
-  --text:#f2f6ff;--muted:#9aacc5;--accent:#55b8ff;
-  --line:#273951;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,sans-serif;padding:16px;
-  padding-bottom:90px;
-}
-button{font:inherit;cursor:pointer;color:inherit}
-button:active{transform:scale(.98)}
-.topbar{display:flex;justify-content:space-between;
-align-items:center;gap:12px;margin-bottom:22px}
-.brand{font-size:24px;font-weight:800}
-.subtitle{color:var(--muted);font-size:12px;margin-top:4px}
-.clock{text-align:right;font-size:27px;font-weight:bold}
-.date{font-size:11px;color:var(--muted);margin-top:4px}
-.status{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.pill{background:var(--panel2);padding:8px 11px;
-border-radius:30px;font-size:12px;color:var(--muted)}
-h2{font-size:18px;margin:0 0 13px}
-h3{font-size:16px;margin:0 0 8px}
-p{line-height:1.5}
-.muted{color:var(--muted);font-size:13px}
-.hero{background:linear-gradient(125deg,#123a63,#17243d);
-border:1px solid #28517a;border-radius:20px;padding:20px;
-margin-bottom:18px}
-.hero small{color:#b8ddff}
-.hero .big{font-size:23px;font-weight:bold;margin:9px 0}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.tile{background:var(--panel);border:1px solid var(--line);
-border-radius:16px;min-height:105px;padding:12px 5px;
-display:flex;flex-direction:column;align-items:center;
-justify-content:center;gap:9px;font-size:12px;text-align:center}
-.tile .emoji{font-size:25px}
-.tile small{color:var(--muted);font-size:10px}
-.card{background:var(--panel);border:1px solid var(--line);
-border-radius:18px;padding:16px;margin-top:16px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.action{background:var(--panel2);border:1px solid var(--line);
-border-radius:12px;padding:11px 14px}
-input[type=file]{width:100%;margin:10px 0}
-audio,video{width:100%;margin-top:12px}
-video{max-height:45vh;background:#000}
-.nav{position:fixed;bottom:0;left:0;right:0;
-display:grid;grid-template-columns:repeat(3,1fr);
-background:#0d1726;border-top:1px solid var(--line);
-padding:10px max(12px,env(safe-area-inset-left));
-padding-bottom:max(10px,env(safe-area-inset-bottom));
-z-index:5}
-.nav button{background:transparent;border:0;color:var(--muted);
-padding:8px 3px;font-size:12px}
-.nav button.active{color:var(--accent)}
-.nav span{display:block;font-size:21px;margin-bottom:4px}
-.page{display:none}
-.page.active{display:block}
-.setting{padding:15px 0;border-bottom:1px solid var(--line)}
-body.light{--bg:#edf2f8;--panel:#fff;--panel2:#e1eaf5;
---text:#14243a;--muted:#53677f;--line:#cad6e4}
-body.light .nav{background:#fff}
-@media(min-width:700px){
- body{padding:24px 30px 100px;max-width:1200px;margin:auto}
- .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
- .tile{min-height:135px;font-size:15px}
- .tile .emoji{font-size:32px}
- .hero{padding:28px}
- .hero .big{font-size:30px}
- .home-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
-}
-  
-/* CarOS v0.3: widescreen head-unit layout */
-@media (min-width: 900px) {
-  body {
-    max-width: none;
-    padding: 24px 28px 30px 110px;
-  }
-
-  .nav {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: auto;
-    width: 86px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 18px;
-    padding: 16px 6px;
-    border-top: 0;
-    border-right: 1px solid var(--line);
-  }
-
-  .nav button {
-    border-radius: 12px;
-    padding: 15px 2px;
-  }
-
-  .hero {
-    min-height: 170px;
-  }
-
-  .tile {
-    min-height: 145px;
-    border-radius: 20px;
-  }
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarOS</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #10151c;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      padding: 22px;
+      background: #1b2634;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; color: #55d6be; }
+    .status { color: #55d6be; font-size: 13px; }
+    main { padding: 20px; }
+    .clock {
+      font-size: 42px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .subtitle { color: #aab6c5; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .tile {
+      background: #202b39;
+      border: 1px solid #354458;
+      border-radius: 18px;
+      min-height: 125px;
+      padding: 20px 12px;
+      text-align: center;
+      color: white;
+      font-size: 17px;
+    }
+    .tile span {
+      display: block;
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+    .tile:active { background: #304456; }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #8998aa;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CarOS</h1>
+    <div class="status">● SYSTEM READY</div>
+  </header>
+  <main>
+    <p class="subtitle">Selamat memandu</p>
+    <div class="clock" id="clock">--:--</div>
+    <p class="subtitle" id="date"></p>
+    <div class="grid">
+      <button class="tile" onclick="showMessage('FM Radio')">
+        <span>📻</span>FM Radio
+      </button>
+      <button class="tile" onclick="showMessage('Bluetooth')">
+        <span>ᛒ</span>Bluetooth
+      </button>
+      <button class="tile" onclick="showMessage('Music Player')">
+        <span>🎵</span>Music Player
+      </button>
+      <button class="tile" onclick="showMessage('Video Player')">
+        <span>🎬</span>Video Player
+      </button>
+      <button class="tile" onclick="showMessage('Play Store')">
+        <span>▶️</span>Play Store
+      </button>
+      <button class="tile" onclick="showMessage('Android Auto')">
+        <span>🚘</span>Android Auto
+      </button>
+    </div>
+    <p id="message" style="text-align:center;color:#55d6be"></p>
+  </main>
+  <footer>CarOS Prototype v0.4</footer>
+  <script>
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent =
+        now.toLocaleTimeString('ms-MY', {
+          hour: '2-digit', minute: '2-digit'
+        });
+      document.getElementById('date').textContent =
+        now.toLocaleDateString('ms-MY', {
+          weekday: 'long', day: 'numeric', month: 'long'
+        });
+    }
+    function showMessage(name) {
+      document.getElementById('message').textContent =
+        name + ' — fungsi belum disambungkan.';
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
