@@ -36,13 +36,18 @@ jobs:
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses
 
+
       - name: Prepare Capacitor project
         run: |
           npm init -y
+          npm pkg set name=caros
           npm install @capacitor/core @capacitor/android
           npm install --save-dev @capacitor/cli
-          npx cap init CarOS com.keynith01.caros --web-dir=.
+          mkdir -p www
+          echo '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"><title>CarOS</title></head><body><h1>CarOS</h1><p>CarOS is running.</p></body></html>' > www/index.html
+          npx cap init CarOS com.keynith01.caros --web-dir=www
           npx cap add android
+
 
       - name: Build debug APK
         run: |
