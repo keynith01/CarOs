@@ -46,8 +46,8 @@ jobs:
           mkdir -p www
           cp index.html www/index.html
           npx cap init CarOS com.keynith01.caros --web-dir=www
-                    sed -i '/<application/i\    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />\n    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />' android/app/src/main/AndroidManifest.xml
-
+          npx cap add android
+          sed -i '/<application/i\    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />\n    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />' android/app/src/main/AndroidManifest.xml
       - name: Build debug APK
         run: |
           npx cap sync android
