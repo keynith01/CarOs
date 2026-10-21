@@ -47,6 +47,7 @@ jobs:
           npm install --save-dev esbuild
           mkdir -p www
           cp index.html www/index.html
+          npx esbuild music-player.js --bundle --format=iife --outfile=www/music-player.bundle.js
           npx cap init CarOS com.keynith01.caros --web-dir=www
           npx cap add android
           sed -i '/<application/i\    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />\n    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />' android/app/src/main/AndroidManifest.xml
