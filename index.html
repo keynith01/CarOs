@@ -142,8 +142,7 @@ async function openMusicPlayer() {
   const list = document.getElementById('musicList');
 
   try {
-    const store = window.Capacitor?.Plugins?.CapacitorMediaStore;
-
+    const store = window.CapacitorMediaStore;
     if (!store) {
       status.textContent =
         'Plugin muzik belum dapat diakses. Kita perlu semak sambungan plugin.';
