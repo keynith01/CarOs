@@ -41,6 +41,7 @@ jobs:
         run: |
           npm init -y
           npm pkg set name=caros
+          npm install @capacitor/core @capacitor/android
           npm install @odion-cloud/capacitor-mediastore
           npm install --save-dev @capacitor/cli
           mkdir -p www
