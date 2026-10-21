@@ -44,6 +44,7 @@ jobs:
           npm install @capacitor/core@^6 @capacitor/android@^6
           npm install @odion-cloud/capacitor-mediastore
           npm install --save-dev @capacitor/cli
+          npm install --save-dev esbuild
           mkdir -p www
           cp index.html www/index.html
           npx cap init CarOS com.keynith01.caros --web-dir=www
