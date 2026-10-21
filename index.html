@@ -69,13 +69,13 @@
     <div class="clock" id="clock">--:--</div>
     <p class="subtitle" id="date"></p>
     <div class="grid">
-      <button class="tile" onclick="showMessage('FM Radio')">
+      <button class="tile" onclick="showMessage('FM Radio')">musi
         <span>📻</span>FM Radio
       </button>
       <button class="tile" onclick="showMessage('Bluetooth')">
         <span>ᛒ</span>Bluetooth
       </button>
-      <button class="tile" onclick="showMessage('Music Player')">
+      <button class="tile" onclick="openMusicPlayer()">
         <span>🎵</span>Music Player
       </button>
       <button class="tile" onclick="showMessage('Video Player')">
@@ -110,5 +110,96 @@
     updateClock();
     setInterval(updateClock, 1000);
   </script>
+  
+<script>
+async function openMusicPlayer() {
+  let player = document.getElementById('musicPlayer');
+
+  if (!player) {
+    player = document.createElement('div');
+    player.id = 'musicPlayer';
+    player.style.cssText =
+      'position:fixed;inset:0;background:#101820;color:white;' +
+      'z-index:9999;padding:24px;overflow:auto;font-family:Arial;';
+
+    player.innerHTML = `
+      <button id="closeMusic"
+        style="padding:10px;background:#263238;color:white;border:0;border-radius:8px">
+        ← Dashboard
+      </button>
+      <h2>🎵 Music Player</h2>
+      <p id="musicStatus">Bersedia untuk imbas lagu...</p>
+      <audio id="musicAudio" controls style="width:100%"></audio>
+      <div id="musicList"></div>
+    `;
+
+    document.body.appendChild(player);
+    document.getElementById('closeMusic').onclick =
+      () => player.remove();
+  }
+
+  const status = document.getElementById('musicStatus');
+  const list = document.getElementById('musicList');
+
+  try {
+    const store = window.Capacitor?.Plugins?.CapacitorMediaStore;
+
+    if (!store) {
+      status.textContent =
+        'Plugin muzik belum dapat diakses. Kita perlu semak sambungan plugin.';
+      return;
+    }
+
+    status.textContent = 'Meminta kebenaran akses muzik...';
+    await store.requestPermissions({ types: ['audio'] });
+
+    status.textContent = 'Sedang mengimbas lagu...';
+
+    const result = await store.getMediasByType({
+      mediaType: 'audio',
+      sortBy: 'TITLE',
+      includeExternal: true
+    });
+
+    const songs = result.media || [];
+    list.replaceChildren();
+
+    if (!songs.length) {
+      status.textContent = 'Tiada fail muzik ditemui dalam telefon.';
+      return;
+    }
+
+    status.textContent = songs.length + ' lagu ditemui';
+
+    songs.forEach(song => {
+      const item = document.createElement('button');
+      item.style.cssText =
+        'display:block;width:100%;padding:14px;margin:8px 0;' +
+        'text-align:left;background:#263238;color:white;' +
+        'border:0;border-radius:10px';
+
+      item.textContent =
+        (song.title || song.displayName || 'Lagu tanpa tajuk') +
+        ' — ' + (song.artist || 'Artis tidak diketahui');
+
+      item.onclick = async () => {
+        const audio = document.getElementById('musicAudio');
+        audio.src = song.uri;
+        try {
+          await audio.play();
+        } catch (error) {
+          status.textContent =
+            'Lagu dipilih, tetapi playback gagal. Kita akan semak URI audio.';
+        }
+      };
+
+      list.appendChild(item);
+    });
+  } catch (error) {
+    status.textContent = 'Ralat imbasan: ' +
+      (error.message || String(error));
+  }
+}
+</script>
 </body>
 </html>
